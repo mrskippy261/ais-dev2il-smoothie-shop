@@ -7,19 +7,16 @@ The smoothie shop application, allows users to order delicious smoothies. It con
 - The Kitchen Service: Prepares the smoothies
 
 To open your personal smoothie shop
-- Open a terminal and run `uv run kitchen_service.py` or use PyCharm to run the service. 
-- Open another terminal and run: `uv run kitchen_service.py` or use PyCharm to run the service.
+- Open a terminal and run `uv run uvicorn order_service:app --port 8000 --reload`. 
+- Open another terminal and run: `uv run uvicorn kitchen_service:app --port 8001 --reload`.
 
 ## Operating the Smoothie Shop in Blind Mode
 
-Let's start to buy some smoothies. Open a terminal and run `uv run buy_smoothies.py` or use 
-PyCharm to run the service. Look at the console output. You should see that your smoothie shop is 
-working fine.
+Let's start to buy some smoothies. Open a terminal and run `uv run buy_smoothies.py`. 
+Look at the console output. You should see that your smoothie shop is working fine.
 
 Let's start to send some more customers to your smoothie shop. Open another terminal and run 
-`uv run buy_smoothies.py` or use PyCharm to run the service (if you use PyCharm, you need to allow multiple 
-instances using _Run > Edit Configurations... > buy_smoothies > Modify Options_). Look at the console
-output again.
+`uv run buy_smoothies.py`. Look at the console output again.
 
 It looks like your shop is having some troubles from time to time. Try to figure out what is going wrong by
 looking at the outputs of all the started services. **You are not allowed to look at the code!** 
@@ -32,5 +29,21 @@ so busy that the work on the requested smoothie can't be started in time. In thi
 have been easy, as the kitchen already contains a configuration parameter to increase the number of cooks
 (`NUM_COOKS`).
 
+## Providing More Insights Through Log Outputs
+
+We are now providing more insights into the smoothie shop by adding logging to the application. Remember 
+these hints on which logging level to choose from the [Python logging HOWTO](https://docs.python.org/3/howto/logging.html#when-to-use-logging): 
+
+| Level     | When it’s used                                                                                           |
+|-----------|---------------------------------------------------------------------------------------------------------|
+| DEBUG     | Detailed information, typically of interest only when diagnosing problems.                              |
+| INFO      | Confirmation that things are working as expected.                                                       |
+| WARNING   | An indication that something unexpected happened, or indicative of some problem in the near future.     |
+| ERROR     | Due to a more serious problem, the software has not been able to perform some function.                 |
+| CRITICAL  | A serious error, indicating that the program itself may be unable to continue running.                  |
 
 
+
+### Further Readings and Exercises
+
+- Read through the [Python Logging HOWTO](https://docs.python.org/3/howto/logging.html)

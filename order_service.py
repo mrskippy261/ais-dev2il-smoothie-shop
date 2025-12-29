@@ -21,8 +21,3 @@ async def create_order(order: Order):
             raise HTTPException(status_code=e.response.status_code, detail="Kitchen failed to process order")
         except httpx.RequestError:
             raise HTTPException(status_code=503, detail="Kitchen unavailable")
-
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
-
