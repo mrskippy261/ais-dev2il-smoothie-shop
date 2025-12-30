@@ -3,7 +3,7 @@ import random
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import logging
-from prometheus_fastapi_instrumentator import Instrumentator
+
 
 logger = logging.getLogger(__name__)
 
@@ -11,8 +11,16 @@ logger = logging.getLogger(__name__)
 app = FastAPI(title="Kitchen Service")
 
 # Initialize Prometheus metrics instrumentation
+from prometheus_fastapi_instrumentator import Instrumentator
 Instrumentator().instrument(app).expose(app)
 
+# Custom metric: Count smoothies ordered by flavor
+from prometheus_client import Counter
+smoothies_ordered = Counter(
+    'smoothies_ordered_total',
+    'Total number of smoothies ordered',
+    ['flavor']
+)
 NUM_COOKS = 1
 cook_semaphore = asyncio.Semaphore(NUM_COOKS)
 
@@ -22,6 +30,10 @@ class SmoothieOrder(BaseModel):
 @app.post("/prepare")
 async def prepare_smoothie(order: SmoothieOrder):
     logger.info(f"Received order to prepare a smoothie with flavor {order.flavor}")
+
+    # Increment the counter for this flavor
+    smoothies_ordered.labels(flavor=order.flavor).inc()
+
     try:
         logger.debug(f"Waiting for a cook to become available")
         await asyncio.wait_for(cook_semaphore.acquire(), timeout=2.0)
