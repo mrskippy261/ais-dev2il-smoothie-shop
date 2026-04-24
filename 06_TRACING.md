@@ -166,6 +166,9 @@ In this challenge, you will add tracing **without changing a single line of appl
 
 **Important:** The `metrics` branch does **not** contain any tracing code.
 
+**Gotcha:** If you don't have a `metrics` branch then you probably forked the repository only with the `main` branch. 
+In this case you can just clone my original repository instead of your fork and work from there.
+
 **Step 1: Install auto-instrumentation libraries**
 
 ```bash
