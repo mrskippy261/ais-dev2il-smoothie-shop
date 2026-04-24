@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 app = FastAPI(title="Kitchen Service")
 
 # Configuration: How many cooks are available in the kitchen
-NUM_COOKS = 1
+NUM_COOKS = 1000
 
 # Semaphore: Controls how many smoothies can be prepared at the same time
 # (one per cook). If all cooks are busy, new orders must wait.
