@@ -74,6 +74,9 @@ async def prepare_smoothie(order: SmoothieOrder):
     # Increment the counter for this flavor
     smoothies_ordered.labels(flavor=order.flavor).inc()
 
+    # Get a tracer named after this module (same pattern as getLogger(__name__) for loggers).
+    # The name identifies which part of the code created the tracer and will show up
+    # as `otel.library.name` in Jaeger, so you can see which module produced a span.
     tracer = trace.get_tracer(__name__)
 
     # Custom span: Waiting for cook to become available
